@@ -12,7 +12,7 @@ router.get("/", userController.isLoggedIn, viewController.getOverview);
 router.get("/login", userController.isLoggedIn, viewController.getLoginForm);
 router.get("/signup", userController.isLoggedIn, viewController.getSignUpForm);
 router.get("/cart", userController.isLoggedIn, viewController.getCartPage);
-
+router.get("/checkout", userController.isLoggedIn, viewController.getCheckoutPage);
 // router.get("/me", authController.protect, viewController.getAccount);
 // router.get("/my-tours", authController.protect, viewController.getMyTours);
 

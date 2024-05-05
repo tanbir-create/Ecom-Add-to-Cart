@@ -14,7 +14,8 @@ async function handleUpdateItem(e) {
             return await updateItem(e);
         }
     } catch (err) {
-        showAlert("error", err.response.data.message);
+        console.log(err);
+        showAlert("error", err.response?.data?.message);
     }
 }
 
@@ -35,6 +36,8 @@ async function updateItem(e) {
     });
 
     if (res.data.status === "success") {
+        const itemId = res.data?.data?.cart?.items?.find((item) => item.productId === productId);
+        inputElement.value = itemId.quantity;
         showAlert("success", res.data.message ? res.data.message : "Cart quantity updated");
 
         await updateTotalItemsAndPrice();
@@ -73,6 +76,16 @@ async function updateTotalItemsAndPrice() {
         if (res.data.status === "success") {
             const { totalPrice, totalItems } = res.data.data;
 
+            if (!totalItems || totalItems === 0) {
+                cartQuantity.innerText = 0;
+
+                const cartContainer = document.querySelector(".cart-page");
+                cartContainer.innerHTML = `<h1 class="text-lg font-semibold mb-2 text-center">Cart is empty</h1>
+                                          <a href="/" class="sky-400 border-sky-400 text-center font-bold block w-full underline underline-offset-4 text-xl">Home</a>`;
+
+                document.querySelector("aside").remove();
+                return;
+            }
             totalPriceElemnt.innerText = totalPrice
                 ? totalPrice.toLocaleString("hi-IN", {
                       style: "currency",
@@ -83,7 +96,6 @@ async function updateTotalItemsAndPrice() {
             cartQuantity.innerText = totalItems ? totalItems : 0;
         }
     } catch (error) {
-        console.log(error);
         showAlert("error", "Error updating cart total");
     }
 }

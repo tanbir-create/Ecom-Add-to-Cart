@@ -1,8 +1,6 @@
 extends base
 
 block append head 
-  //- script(src="/js/axios.1.4.0.min.js" defer)
-  //- script(src="/js/alerts.js", defer)
   script(src="/js/signup.js", defer)
 
 block content
@@ -15,9 +13,11 @@ block content
           input#email.form__input.block.w-full.px-3.py-2.border.rounded-md.shadow-sm.placeholder-gray-400(class="focus:outline-none focus:border-sky-400 focus:ring focus:ring-sky-400 focus:ring-opacity-50" type="email", placeholder="you@example.com", required)
         .form__group.mb-4
           label.block.text-gray-700.text-lg.font-bold.mb-2(for="password") Password
-          input#password.form__input.block.w-full.px-3.py-2.border.rounded-md.shadow-sm.placeholder-gray-400(class="focus:outline-none focus:border-sky-400 focus:ring focus:ring-sky-400 focus:ring-opacity-50" type="password", placeholder="********", required, minlength="8")
+          input#password.form__input.block.w-full.px-3.py-2.border.rounded-md.shadow-sm.placeholder-gray-400(class="focus:outline-none focus:border-sky-400 focus:ring focus:ring-sky-400 focus:ring-opacity-50" type="password", placeholder="********", required, minlength="4")
         .form__group.mb-4
           label.block.text-gray-700.text-lg.font-bold.mb-2(for="confirmPassword") Confirm Password
-          input#confirmPassword.form__input.block.w-full.px-3.py-2.border.rounded-md.shadow-sm.placeholder-gray-400(class="focus:outline-none focus:border-sky-400 focus:ring focus:ring-sky-400 focus:ring-opacity-50" type="password", placeholder="********", required, minlength="8")
-        .form__group
-          button.btn.btn--green.px-4.py-2.bg-green-500.text-white.rounded-md(class="hover:bg-green-600" type="submit") Sign Up
+          input#confirmPassword.form__input.block.w-full.px-3.py-2.border.rounded-md.shadow-sm.placeholder-gray-400(class="focus:outline-none focus:border-sky-400 focus:ring focus:ring-sky-400 focus:ring-opacity-50" type="password", placeholder="********", required, minlength="4")
+        .form__group.mb-4
+          button.px-4.py-2.mx-auto.w-full.bg-sky-400.text-white.text-center.rounded-md(class="hover:bg-sky-500" type="submit")  Sign Up
+        .form__group.mb-4.mx-auto
+          a(href="/login").px-4.py-2.block.mx-auto.bg-green-500.text-white.text-center.rounded-md(class="hover:bg-green-600") Login to existing account

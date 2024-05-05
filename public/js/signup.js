@@ -25,14 +25,16 @@ const signup = async (email, password, confirmPassword) => {
         });
 
         if (res.data.status === "success") {
-            showAlert("success", "Logged in successfully!");
+            showAlert("success", "Sign up successful! Welcome");
             window.setTimeout(() => {
                 location.assign("/");
             }, 1000);
         }
     } catch (err) {
-        let error = err.response.data.error?.details?.errors?.[0];
-        error = error ? Object.values(error)[0] : err.response.data.message;
-        showAlert("error", error);
+        // let error = err.response.data.error?.details?.errors?.[0];
+        // error = error ? Object.values(error)[0] : err.response.data.message;
+        showAlert("error", error.response.data?.message);
     }
 };
+
+function getPageParams() {}

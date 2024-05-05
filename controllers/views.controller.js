@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const Cart = require("../models/cart.model");
 const cartService = require("../services/cart.service");
 const catchAsync = require("../utils/catchAsync");
 
@@ -24,7 +25,6 @@ module.exports.getSignUpForm = catchAsync(async (req, res, next) => {
 
 module.exports.getCartPage = catchAsync(async (req, res, next) => {
     let data;
-    console.log(req.session.id);
     if (!req.session?.user) {
         data = await cartService.getCart({ sessionId: req.session.id });
     } else {
@@ -35,5 +35,22 @@ module.exports.getCartPage = catchAsync(async (req, res, next) => {
     res.status(200).render("cart", {
         title: "Cart",
         data,
+    });
+});
+
+module.exports.getCheckoutPage = catchAsync(async (req, res, next) => {
+    if (!req.session?.user) {
+        return res.status(200).redirect("/login");
+    }
+
+    const cart = await Cart.deleteOne({ userId: req.session.user });
+
+    if (cart.deletedCount < 1) {
+        return res.redirect("/");
+    }
+
+    res.status(200).render("checkout", {
+        title: "Cart",
+        message: "Thank you for shopping with us",
     });
 });

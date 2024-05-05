@@ -26,6 +26,7 @@ block content
           span#cart-total-items #{data.totalItems}
         p.text-lg.font-semibold Total Price: 
          span#cart-total-price #{data.totalPrice.toLocaleString("hi-IN", {style: "currency", currency: "INR"})}
+        a(href="/checkout") Checkout
     - if (data.cart === undefined)
       .cart-page.flex-1.mx-auto.my-10.max-w-4xl.p-8.bg-white.shadow-md.rounded-lg
         h1.text-lg.font-semibold.mb-2.text-center Cart is empty

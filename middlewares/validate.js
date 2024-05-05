@@ -14,11 +14,13 @@ function validate(schema) {
         const { error, value } = schema.validate(req.body, validateOptions);
 
         if (error) {
+            let message = "Please enter valid data";
             const customErrorMessages = error.details.map((err) => {
+                message = err.message;
                 return { [err.path[0]]: err.message };
             });
             return next(
-                new AppError("Please enter valid data", 400, "form_validation_error", {
+                new AppError(message, 400, "form_validation_error", {
                     errors: customErrorMessages,
                 })
             );

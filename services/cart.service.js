@@ -64,7 +64,7 @@ module.exports.getCart = async ({ userId, sessionId }) => {
     if (!cart) {
         return {};
     }
-    console.log(cart.items);
+
     let quantityAdjustedToAvaiablility = false;
 
     const generatedCart = [];
