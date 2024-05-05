@@ -28,8 +28,6 @@ const login = async (email, password) => {
                 location.assign("/");
             }, 1000);
         }
-
-        console.log(res);
     } catch (err) {
         let error = err.response.data.error?.details?.errors?.[0];
         error = error ? Object.values(error)[0] : err.response.data.message;
