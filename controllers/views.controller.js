@@ -39,7 +39,7 @@ module.exports.getCartPage = catchAsync(async (req, res, next) => {
 
 module.exports.getCheckoutPage = catchAsync(async (req, res, next) => {
     if (!req.session?.user) {
-        return res.status(200).redirect("/login");
+        return res.status(200).redirect("/login?redirect=cart");
     }
 
     const cart = await Cart.deleteOne({ userId: req.session.user });

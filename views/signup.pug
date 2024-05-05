@@ -2,6 +2,7 @@ extends base
 
 block append head 
   script(src="/js/signup.js", defer)
+  script(src="/js/login.js", defer)
 
 block content
   main.main
@@ -20,4 +21,6 @@ block content
         .form__group.mb-4
           button.px-4.py-2.mx-auto.w-full.bg-sky-400.text-white.text-center.rounded-md(class="hover:bg-sky-500" type="submit")  Sign Up
         .form__group.mb-4.mx-auto
-          a(href="/login").px-4.py-2.block.mx-auto.bg-green-500.text-white.text-center.rounded-md(class="hover:bg-green-600") Login to existing account
+          button#goto-login.px-4.py-2.block.mx-auto.w-full.bg-green-500.text-white.text-center.rounded-md(class="hover:bg-green-600") Login to existing account
+        .form__group.mb-4
+          button#demo-user.px-4.py-2.mx-auto.w-full.bg-gray-800.text-white.text-center.rounded-md(class="hover:bg-gray-950") Demo User

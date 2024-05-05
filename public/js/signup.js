@@ -27,7 +27,13 @@ const signup = async (email, password, confirmPassword) => {
         if (res.data.status === "success") {
             showAlert("success", "Sign up successful! Welcome");
             window.setTimeout(() => {
-                location.assign("/");
+                const params = new URLSearchParams(window.location.search.split("?")[1]);
+
+                if (params.has("redirect") && params.get("redirect") === "cart") {
+                    location.assign("/cart");
+                } else {
+                    location.assign("/");
+                }
             }, 1000);
         }
     } catch (err) {
@@ -37,4 +43,12 @@ const signup = async (email, password, confirmPassword) => {
     }
 };
 
-function getPageParams() {}
+document.getElementById("goto-login")?.addEventListener("click", () => {
+    const params = new URLSearchParams(window.location.search.split("?")[1]);
+
+    if (params.has("redirect") && params.get("redirect") === "cart") {
+        location.assign("/login/?redirect=cart");
+    } else {
+        location.assign("/");
+    }
+});
