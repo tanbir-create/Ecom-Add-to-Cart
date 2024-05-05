@@ -24,7 +24,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.set("trust proxy", 1);
 
-// app.use(cors({ origin: "http://127.0.0.1:5500", credentials: true }));
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Credentials", "true");
     next();
@@ -43,9 +42,6 @@ app.use(
                 "https://cdn.tailwindcss.com",
                 "https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js",
             ],
-            // frameSrc: ["'self'", "https://js.stripe.com/v3/"],
-            // // for parcel bundler to establish connection between client and dev server for hot module replacement by creating a ws:// connection
-            // connectSrc: ["'self'", "blob:", "wss:", "ws://localhost:*"],
         },
     })
 );
@@ -54,14 +50,6 @@ if (process.env.NODE_ENV === "development") {
     app.use(morgan("dev"));
 }
 
-// const limiter = rateLimit({
-//     max: 100,
-//     windowMs: 60 * 60 * 1000,
-//     message: "Too many requests from this IP, please try again in an hour",
-// });
-
-// app.use("/api", limiter);
-
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -69,16 +57,6 @@ app.use(cookieParser());
 // for nosql injection and xss attacks
 app.use(mongoSanitize());
 app.use(xss());
-
-// app.use(compression());
-
-// To protect against HTTP Parameter Pollution attacks, ( /endpoint?name=john&name=doe -> /endpoint?name=doe )
-// We can whitelist some of the params which might be needed.
-// app.use(
-//     hpp({
-//         whitelist: ["duration", "price", "difficulty", "role"],
-//     })
-// );
 
 app.use(
     session({
@@ -101,35 +79,6 @@ app.use(
 
 app.use("/", viewRouter);
 app.use("/api/v1/", appRouter);
-
-// app.use(proxy("http://127.0.0.1:5500"));
-
-// captures all requests for API endpoints that do not match any defined routes and responds with an error message
-// indicating that the requested URL does not exist on the server.
-// const dbs = { users: [], carts: [] };
-// app.get("/api/v1/test", (req, res) => {
-//     res.json(req.session);
-// });
-
-// app.post("/api/v1/cart", (req, res) => {
-//     req.session.cart = req.body.cart;
-
-//     res.json({ s: req.session });
-// });
-
-// app.post("/api/v1/user", (req, res) => {
-//     req.session.user = 1;
-//     dbs.users.push(req.session.user);
-
-//     if (req.session.cart) {
-//         dbs.carts.push(req.session.cart);
-//         delete req.session["cart"];
-//     }
-//     console.log(dbs);
-//     console.log(dbs.carts);
-
-//     res.json({ s: req.session });
-// });
 
 app.all("*", (req, res, next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

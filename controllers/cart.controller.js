@@ -149,18 +149,3 @@ module.exports.getCartQuantity = catchAsync(async (req, res, next) => {
         data: { quantity },
     });
 });
-
-// module.exports.getCartQuantity = catchAsync(async (req, res, next) => {
-//     let cart;
-//     if (!req.session?.user) {
-//         cart = await cartService.getCart({ sessionId: req.session.id });
-//     } else {
-//         cart = await cartService.getCart({ userId: req.session.user });
-//     }
-
-//     res.status(200).json({
-//         status: "success",
-//         statusCode: 200,
-//         data: { quantity: cart.totalItems, quantityAdjustedToAvaiablility: cart.quantityAdjustedToAvaiablility },
-//     });
-// });

@@ -10,12 +10,6 @@ module.exports.signup = catchAsync(async (req, res, next) => {
 
     req.session.user = user._id;
 
-    // if (req.session?.cart?.items) {
-    //     const cart = req.session.cart;
-    //     await cartService.mergeSessionCart({ userId: user._id, cartItems: cart.items });
-    //     delete req.session["cart"];
-    // }
-
     res.status(201).json({
         status: "success",
         statusCode: 201,

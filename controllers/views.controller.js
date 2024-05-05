@@ -31,7 +31,6 @@ module.exports.getCartPage = catchAsync(async (req, res, next) => {
         data = await cartService.getCart({ userId: req.session.user });
     }
 
-    console.log(data);
     res.status(200).render("cart", {
         title: "Cart",
         data,
