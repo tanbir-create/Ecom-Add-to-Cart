@@ -1,14 +1,13 @@
 header.header.bg-sky-400.text-white.py-4.px-10.flex.items-center.justify-between.shadow-md.sticky.top-0
   nav.nav.flex.items-center
-    a.text-white(class="hover:text-gray-200" href="/") ECOM
+    a.text-white(class="hover:text-gray-200" href="/") HOME
   .header__logo
-    //- img.h-12(src="", alt="Ecom")
-  nav.nav.flex.items-center.gap-8
+  nav.nav.flex.items-center.gap-3(class="sm:gap-3 md:gap-6 lg:gap-8 xl:gap-10")
     if user
       button.text-white(class="hover:text-gray-200 uppercase" id="logout") Log out
       a.flex.items-center.text-white(class="hover:text-gray-200 uppercase" href="/")
         img.h-8.rounded-full.mr-1(src="/images/avatar.png", alt=`${user.email.split("@")[0]}`)
-        span= user.email.split("@")[0]
+        span #{user.email.split("@")[0].substring(0,4)}
     else
       a.text-white(class="hover:text-gray-200 uppercase" href="/login") Login
       a.flex.items-center.text-white(class="hover:text-gray-200 uppercase" href="/signup") Sign up

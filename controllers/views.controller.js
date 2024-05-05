@@ -53,3 +53,12 @@ module.exports.getCheckoutPage = catchAsync(async (req, res, next) => {
         message: "Thank you for shopping with us",
     });
 });
+
+module.exports.getProductPage = catchAsync(async (req, res, next) => {
+    const productId = req.params.productId;
+    const product = await Product.findById(productId);
+    res.status(200).render("product", {
+        title: product.name,
+        product,
+    });
+});

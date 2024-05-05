@@ -10,5 +10,6 @@ router.get("/login", userController.isLoggedIn, viewController.getLoginForm);
 router.get("/signup", userController.isLoggedIn, viewController.getSignUpForm);
 router.get("/cart", userController.isLoggedIn, viewController.getCartPage);
 router.get("/checkout", userController.isLoggedIn, viewController.getCheckoutPage);
+router.get("/products/:productId", userController.isLoggedIn, viewController.getProductPage);
 
 module.exports = router;

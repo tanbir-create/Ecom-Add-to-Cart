@@ -1,8 +1,3 @@
-// const cartPage = document.getElementById("cart-page-main");
-
-// if (cartPage) {
-// }
-
 document.addEventListener("click", handleUpdateItem);
 
 async function handleUpdateItem(e) {
@@ -14,7 +9,6 @@ async function handleUpdateItem(e) {
             return await updateItem(e);
         }
     } catch (err) {
-        console.log(err);
         showAlert("error", err.response?.data?.message);
     }
 }

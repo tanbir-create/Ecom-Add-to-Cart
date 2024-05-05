@@ -1,6 +1,10 @@
 const Cart = require("../models/cart.model");
 const Product = require("../models/product.model");
 
+function add(...numbers) {
+    return numbers.reduce((acc, num) => acc + Number(num), 0);
+}
+
 module.exports.addToCart = async ({ sessionId, userId, cartItem }) => {
     const cart = await Cart.findOne({ $and: [{ userId: userId }, { sessionId: sessionId }] }).select(
         "sessionId userId items totalItems"
@@ -34,17 +38,17 @@ module.exports.addToCart = async ({ sessionId, userId, cartItem }) => {
             quantityAdjustedToAvaiablility = true;
         }
         cart.items.push(cartItem);
-        cart.totalItems += Number(cartItem.quantity);
+        cart.totalItems = add(cart.totalItems, cartItem.quantity);
     } else {
         //if item exists in cart and new_quantity + previous_quantity doesnt exceed stock then update the quantity
-        if (cartItem.quantity + cart.items[itemIndex].quantity <= cartItem.stock) {
-            cart.items[itemIndex].quantity += cartItem.quantity;
-            cart.totalItems += Number(cartItem.quantity);
+        if (add(cartItem.quantity, cart.items[itemIndex].quantity) <= cartItem.stock) {
+            cart.items[itemIndex].quantity = add(cart.items[itemIndex].quantity, cartItem.quantity);
+            cart.totalItems = add(cart.totalItems, cartItem.quantity);
         } else {
             // else add only the quantity available in stock and notify user about it
             const adjustedQuantity = cartItem.stock - cart.items[itemIndex].quantity;
-            cart.items[itemIndex].quantity += adjustedQuantity;
-            cart.totalItems += adjustedQuantity;
+            cart.items[itemIndex].quantity = add(cart.items[itemIndex].quantity, adjustedQuantity);
+            cart.totalItems = add(cart.totalItems, adjustedQuantity);
             quantityAdjustedToAvaiablility = true;
         }
     }
@@ -74,13 +78,18 @@ module.exports.getCart = async ({ userId, sessionId }) => {
         const product = item.productId;
         let cartQuantity = item.quantity;
 
+        /*
+        while getting the cart someone might have bought the product which was on
+        our cart and the stock might be lower than what we have in our cart,
+        so we adjust our cart quantity to available quantity
+        */
         if (cartQuantity > product.stock) {
             quantityAdjustedToAvaiablility = true;
             cartQuantity = product.stock;
             item.quantity = product.stock;
         }
-        totalItems += cartQuantity;
-        totalPrice += cartQuantity * product.price;
+        totalItems = add(totalItems, cartQuantity);
+        totalPrice = add(totalPrice, cartQuantity * product.price);
         const it = {
             productId: product._id,
             name: product.name,
@@ -138,11 +147,11 @@ module.exports.mergeCarts = async ({ userId, sessionId }) => {
         if (sessionCartItemsMap.has(String(item.productId))) {
             const sessionCartItem = sessionCartItemsMap.get(String(item.productId));
 
-            if (sessionCartItem.quantity + item.quantity <= sessionCartItem.stock) {
-                item.quantity += sessionCartItem.quantity;
+            if (add(sessionCartItem.quantity, item.quantity) <= sessionCartItem.stock) {
+                item.quantity = add(item.quantity, sessionCartItem.quantity);
             } else {
                 const adjustedQuantity = sessionCartItem.stock - item.quantity;
-                item.quantity += adjustedQuantity;
+                item.quantity = add(item.quantity, adjustedQuantity);
             }
             sessionCartItemsMap.delete(String(item.productId));
         }

@@ -1,4 +1,61 @@
-const showAlert = (type, msg) => {
+const cartQuantity = document.getElementById("cart-quantity");
+
+async function setCartQuantity() {
+    const res = await axios({
+        method: "GET",
+        url: "/api/v1/cart/cart_quantity",
+    });
+
+    cartQuantity.innerText = res.data.data?.quantity;
+}
+document.addEventListener("DOMContentLoaded", setCartQuantity);
+
+document.addEventListener("click", async function name(e) {
+    try {
+        if (e.target.dataset?.productId) {
+            const productId = e.target.dataset.productId;
+            const quantity = document.getElementById(`quantity-${productId}`)?.value;
+
+            const res = await axios({
+                method: "POST",
+                url: "/api/v1/cart/",
+                data: {
+                    productId,
+                    quantity: quantity ? quantity : 1,
+                },
+            });
+            await setCartQuantity();
+            const message = res.data?.message;
+
+            if (res.data.status === "success") {
+                showAlert("success", message);
+            }
+        }
+    } catch (err) {
+        let error = err.response.data?.message;
+
+        showAlert("error", error);
+    }
+});
+
+const logOutBtn = document.getElementById("logout");
+if (logOutBtn) logOutBtn.addEventListener("click", logout);
+
+async function logout() {
+    try {
+        const res = await axios({
+            method: "POST",
+            url: "/api/v1/users/logout",
+        });
+        if (res.status === 204) {
+            location.reload(true);
+        }
+    } catch (err) {
+        showAlert("error", "Error logging out! Try again");
+    }
+}
+
+function showAlert(type, msg) {
     hideAlert();
     let svg = "";
     if (type === "success") {
@@ -31,67 +88,9 @@ const showAlert = (type, msg) => {
     setTimeout(() => {
         hideAlert();
     }, 3000);
-};
+}
 
 const hideAlert = () => {
     const el = document.getElementById("popup");
     if (el) el.parentElement.removeChild(el);
 };
-
-const cartQuantity = document.getElementById("cart-quantity");
-
-async function setCartQuantity() {
-    const res = await axios({
-        method: "GET",
-        url: "/api/v1/cart/cart_quantity",
-    });
-
-    cartQuantity.innerText = res.data.data?.quantity;
-}
-document.addEventListener("DOMContentLoaded", setCartQuantity);
-
-document.addEventListener("click", async function name(e) {
-    try {
-        console.log();
-        if (e.target.dataset?.productId) {
-            const productId = e.target.dataset.productId;
-
-            const res = await axios({
-                method: "POST",
-                url: "/api/v1/cart/",
-                data: {
-                    productId,
-                    quantity: 1,
-                },
-            });
-            await setCartQuantity();
-            const message = res.data?.message;
-
-            if (res.data.status === "success") {
-                showAlert("success", message);
-            }
-        }
-    } catch (err) {
-        let error = err.response.data?.message;
-
-        showAlert("error", error);
-    }
-});
-
-const logOutBtn = document.getElementById("logout");
-if (logOutBtn) logOutBtn.addEventListener("click", logout);
-
-async function logout() {
-    try {
-        const res = await axios({
-            method: "POST",
-            url: "/api/v1/users/logout",
-        });
-        console.log(res);
-        if (res.status === 204) {
-            location.reload(true);
-        }
-    } catch (err) {
-        showAlert("error", "Error logging out! Try again");
-    }
-}

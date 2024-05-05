@@ -1,0 +1,33 @@
+extends base
+
+block append head 
+  //- script(src="/js/product.js", defer)
+
+block content
+  //- Product Details Section
+  //- Product Details Section
+  //- https://m.media-amazon.com/images/I/51S-A7DAI3L._SL1000_.jpg
+  .grid.gap-8.max-w-6xl.mx-auto.py-12.px-4(class='md:grid-cols-2 md:px-6')
+    .flex.flex-col.gap-6
+      img.rounded-lg.object-cover.w-full.aspect-square(src=`${product.thumbnail}` alt=`${product.name}` width='600' height='600')
+      .flex.items-center.gap-2.text-sm.text-gray-500(class='dark:text-gray-400')
+        span Category:
+        a(class='hover:underline' href='#') #{product.category}
+    .grid.gap-4
+      .grid.gap-1
+        h1.text-3xl.font-bold #{product.name}
+        p.text-gray-500(class='dark:text-gray-400') Sold by: Ecomwale
+      .flex.items-center.gap-4
+        .text-3xl.font-bold #{product.price.toLocaleString("hi-IN", {style: "currency", currency: "INR"})}
+        .text-sm.text-gray-500(class='dark:text-gray-400') In stock: #{product.stock}
+      .text-gray-500(class='dark:text-gray-400')
+        p #{product.description}
+      div.flex.items-center.gap-4
+        .flex.items-center.gap-2
+          label.font-medium.text-sm(for=`quantity-${product._id}`)
+            | Quantity:
+          input.w-16.shadow-md(id=`quantity-${product._id}` value="1" type="number" min="1" class="border-gray-600 rounded-md px-2 py-1 text-sm bg-transparent border-0 text-center focus:ring-0")
+        button.inline-flex.items-center.justify-center.whitespace-nowrap.text-sm.font-medium.ring-offset-background.transition-colors.bg-sky-400.h-11.rounded-md.px-8(class='hover:bg-sky-500' id="add-to-cart" data-product-id=product._id)
+          | Add to Cart
+
+
