@@ -73,10 +73,14 @@ async function updateTotalItemsAndPrice() {
         if (res.data.status === "success") {
             const { totalPrice, totalItems } = res.data.data;
 
-            if (totalPrice)
-                totalPriceElemnt.innerText = totalPrice.toLocaleString("hi-IN", { style: "currency", currency: "INR" });
-            if (totalItems) totalItemElement.innerText = totalItems;
-            cartQuantity.innerText = totalItems;
+            totalPriceElemnt.innerText = totalPrice
+                ? totalPrice.toLocaleString("hi-IN", {
+                      style: "currency",
+                      currency: "INR",
+                  })
+                : 0;
+            totalItemElement.innerText = totalItems ? totalItems : 0;
+            cartQuantity.innerText = totalItems ? totalItems : 0;
         }
     } catch (error) {
         console.log(error);

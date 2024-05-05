@@ -7,7 +7,8 @@ const Product = require("./models/product.model");
 
 dotenv.config({ path: "./config.env" });
 
-const DB = process.env.MONGO_URI;
+const DB =
+    "mongodb+srv://tanbir-admin:iCKW6Q1MvJg7rLny@cluster0.ok1p4.mongodb.net/Ecom?retryWrites=true&w=majority&appName=Cluster0";
 
 mongoose.connect(DB).then(() => {
     console.log("Connected to db");

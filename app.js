@@ -90,7 +90,7 @@ app.use(
         rolling: true,
         cookie: {
             // Domain: "http://localhost",
-            secure: false,
+            secure: process.env.NODE_ENV === "production",
             httpOnly: true,
             maxAge: 30 * 24 * 3600 * 1000,
             // sameSite: "None",
