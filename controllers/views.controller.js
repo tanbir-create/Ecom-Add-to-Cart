@@ -12,12 +12,19 @@ module.exports.getOverview = catchAsync(async (req, res, next) => {
 });
 
 module.exports.getLoginForm = catchAsync(async (req, res, next) => {
+    if (req.session?.user) {
+        return res.redirect("/");
+    }
+
     res.status(200).render("login", {
         title: "Log into your account",
     });
 });
 
 module.exports.getSignUpForm = catchAsync(async (req, res, next) => {
+    if (req.session?.user) {
+        return res.redirect("/");
+    }
     res.status(200).render("signup", {
         title: "Sign Up with an account",
     });

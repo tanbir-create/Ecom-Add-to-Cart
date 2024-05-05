@@ -46,7 +46,7 @@ function sendErrorProd(err, req, res) {
         });
     }
 
-    console.log(err);
+    // console.log(err);
 
     res.status(500).json({
         status: 500,
@@ -55,7 +55,7 @@ function sendErrorProd(err, req, res) {
 }
 
 module.exports = function (err, req, res, next) {
-    console.log(err);
+    // console.log(err);
     err.statusCode = err.statusCode || 500;
     err.status = err.status || "error";
 
