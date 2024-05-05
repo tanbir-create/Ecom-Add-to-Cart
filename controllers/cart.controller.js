@@ -5,7 +5,7 @@ const catchAsync = require("../utils/catchAsync");
 module.exports.addToCart = catchAsync(async (req, res, next) => {
     let { productId, quantity } = req.body;
 
-    if (quantity === 0 || isNaN(Number(quantity))) {
+    if (isNaN(Number(quantity)) || Number(quantity) === 0) {
         return res.status(400).json({
             status: "fail",
             statusCode: 400,
@@ -54,7 +54,7 @@ module.exports.addToCart = catchAsync(async (req, res, next) => {
 module.exports.updateCart = catchAsync(async (req, res, next) => {
     let { productId, quantity } = req.body;
 
-    if (quantity === 0) {
+    if (isNaN(Number(quantity)) || Number(quantity) === 0) {
         return res.status(400).json({
             status: "fail",
             statusCode: 400,
