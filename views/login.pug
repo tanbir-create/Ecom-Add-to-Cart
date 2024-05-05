@@ -1,0 +1,21 @@
+extends base
+
+block append head 
+  script(src="/js/login.js", defer)
+
+
+block content
+  main.main
+    .login-form.mx-auto.my-10.max-w-sm.p-8.bg-white.shadow-md.rounded-lg
+      h2.text-2xl.font-semibold.mb-6 Log into your account
+      form.form.form--login
+        .form__group.mb-4
+          label.block.text-gray-700.text-lg.font-bold.mb-2(for="email") Email address
+          input#email.form__input.block.w-full.px-3.py-2.border.rounded-md.shadow-sm.placeholder-gray-400(class="focus:outline-none focus:border-sky-400 focus:ring focus:ring-sky-400 focus:ring-opacity-50" type="email", placeholder="you@example.com", required)
+        .form__group.mb-4
+          label.block.text-gray-700.text-lg.font-bold.mb-2(for="password") Password
+          input#password.form__input.block.w-full.px-3.py-2.border.rounded-md.shadow-sm.placeholder-gray-400(class="focus:outline-none focus:border-sky-400 focus:ring focus:ring-sky-400 focus:ring-opacity-50" type="password", placeholder="********", required, minlength="8")
+        .form__group
+          button.btn.btn--green.px-4.py-2.bg-green-500.text-white.rounded-md(class="hover:bg-green-600" type="submit") Login
+          
+

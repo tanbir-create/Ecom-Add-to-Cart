@@ -1,0 +1,25 @@
+extends base
+
+block append head 
+  script(src="/js/login.js", defer)
+
+block content
+  main.main.flex.flex-col-reverse(class="md:flex-row")
+    .cart-page.flex-1.mx-auto.my-10.max-w-4xl.p-8.bg-white.shadow-md.rounded-lg
+      h2.text-2xl.font-semibold.mb-6 Your Cart
+      each item in data.cart
+        .cart-item.mb-6.flex.items-center.border-b.border-gray-200.pb-4
+          img(src=item.thumbnail, alt=item.name, class="w-16 h-16 mr-4")
+          .cart-item-details.flex-1
+            h3.text-lg.font-semibold.mb-2= item.name
+            p.text-gray-600.mb-2 Price: #{item.price.toLocaleString("hi-IN", {style: "currency", currency: "INR"})}
+            p.text-gray-600.mb-2 Quantity: #{item.quantity}
+            p.text-gray-600.mb-2 Stock: #{item.stock}
+          .cart-item-total.text-lg.font-semibold= (item.price * item.quantity).toLocaleString("hi-IN", {style: "currency", currency: "INR"})
+    aside.sidebar.w-full(class=" md:w-64 px-4 py-8 bg-gray-100 shadow-md rounded-lg")
+      h3.text-xl.font-semibold.mb-4 Cart Summary
+      p.text-lg.font-semibold Total Items: #{data.totalItems}
+      p.text-lg.font-semibold Total Price:  #{data.totalPrice.toLocaleString("hi-IN", {style: "currency", currency: "INR"})}
+
+
+

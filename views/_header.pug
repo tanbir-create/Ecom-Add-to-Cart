@@ -1,0 +1,19 @@
+header.header.bg-sky-400.text-white.py-4.px-10.flex.items-center.justify-between.shadow-md.sticky.top-0
+  nav.nav.flex.items-center
+    a.text-white(class="hover:text-gray-200" href="/") ECOM
+  .header__logo
+    //- img.h-12(src="", alt="Ecom")
+  nav.nav.flex.items-center.gap-8
+    if user
+      button.text-white(class="hover:text-gray-200 uppercase" id="logout") Log out
+      a.flex.items-center.text-white(class="hover:text-gray-200 uppercase" href="/")
+        img.h-8.rounded-full.mr-1(src="/images/avatar.png", alt=`${user.email.split("@")[0]}`)
+        span= user.email.split("@")[0]
+    else
+      a.text-white(class="hover:text-gray-200 uppercase" href="/login") Login
+      a.flex.items-center.text-white(class="hover:text-gray-200 uppercase" href="/signup") Sign up
+    a.flex.items-center.text-white(class="hover:text-gray-200 uppercase relative" href="/cart") 
+      img(src="/images/shopping-cart.svg", class="h-7" alt="Cart")
+      // Cart quantity indicator
+      span#cart-quantity.absolute.-top-2.-right-2.px-1.bg-red-500.text-white.text-s.rounded-full.h-5.w-5.flex.items-center.justify-center 0
+
