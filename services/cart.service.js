@@ -1,5 +1,4 @@
 const Cart = require("../models/cart.model");
-const Product = require("../models/product.model");
 
 function add(...numbers) {
     return numbers.reduce((acc, num) => acc + Number(num), 0);

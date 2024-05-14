@@ -1,0 +1,103 @@
+extends base
+
+block append head 
+
+block content
+  //- h2.text-2xl.font-semibold.mb-6.text-center.pt-4 #{message}
+  //- a(href=`/orders`).sky-400.border-sky-400.text-center.font-bold.block.w-full.underline.underline-offset-4.text-xl My orders
+  main.main.flex.flex-col-reverse(class="md:flex-row" id="")
+    - if (order && order.id !== undefined)
+      .cart-page.flex-1.mx-auto.my-10.max-w-4xl.p-8.bg-white.shadow-md.rounded-lg
+        p.text-sky-400.mb-2.block.text-center Order ID:  
+          span #{order.id}
+        div.text-sm.text-slate-500.font-semibold.pb-4.text-center Order Placed: #{new Date(order.createdAt).toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})}
+        div.text-sm.text-slate-500.font-semibold.pb-4.text-center Status: #{order.status}
+        .cart-page.flex-1.mx-auto.my-10.max-w-4xl.p-8.bg-white.shadow-md.rounded-lg
+          h2.text-2xl.font-semibold.mb-6 Order Items
+          div
+            each item in order.items
+              .cart-item.mb-6.flex.items-start.border-b.border-gray-200.pb-4(id=`product-${item.productId}`)
+                img(src=item.thumbnail, alt=item.name, class="w-16 h-16 mr-4")
+                .cart-item-details.flex-1.ml-4
+                  a(href=`/products/${item.productId}`).underline 
+                    h3.text-lg.font-semibold.mb-2= item.name
+                  p.text-gray-600.mb-2.text-sm Quantity: #{item.quantity}
+
+                .ml-auto
+                  p.text-gray-600.font-semibold.mb-2 Price: #{item.price.toLocaleString("hi-IN", {style: "currency", currency: "INR"})}
+        .cart-page.flex-1.mx-auto.my-10.max-w-4xl.p-2.bg-white.shadow-md.rounded-lg.text-xs(class="sm:p-8 sm:text-base")
+
+          section.bg-white
+            h2.text-2xl.font-semibold.mb-6 Tracking
+
+            //- Table Header
+            div.grid.grid-cols-5.font-semibold.text-gray-600.border-b.border-gray-200.py-2.mb-4
+              
+              //- Date Column
+              div Date
+              
+              //- Time Column
+              div Time
+              
+              //- Status Column
+              div Status
+              
+              //- Location Column
+              div Location
+
+            //- Tracking Information
+            each shipment, index in order.tracking
+      
+              div.grid.grid-cols-5.border-b.border-gray-200.py-2.mb-4.relative
+                div(class=`${index === 0 ? 'dot dot-current' : 'dot dot-prev'}`)
+
+                div= new Date(shipment.time).toLocaleString('en-US', { month: 'short', day: 'numeric'})
+
+                //- Time
+                div= new Date(shipment.time).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric'})
+
+                //- Status
+                div= shipment.status
+                
+                //- Location
+                div= shipment.address
+
+         
+          style.
+
+            .dot {
+              position: absolute;
+              margin-right: 3px;
+              top: 50%;
+              left: 0;
+              height: 12px;
+              width: 12px;
+              border-radius: 50%;
+              transition: background-color 0.3s;
+              cursor: pointer;
+              transform: translate(-150%, -50%);
+            }
+
+            .dot-current {
+              background-color: rgb(67, 200, 142);
+            }
+
+            .dot-prev {
+              background-color: gray;
+            }
+
+
+
+
+      aside.sidebar.w-full(class=" md:w-64 px-4 py-8 bg-gray-100 shadow-md rounded-lg")
+        h3.text-xl.font-semibold.mb-4 Order Summary
+        p.text-lg.font-semibold Total Items: 
+          span#cart-total-items #{order.totalItems}
+        p.text-lg.font-semibold Total Price: 
+          span#cart-total-price #{order.orderTotal.toLocaleString("hi-IN", {style: "currency", currency: "INR"})}
+        a(href="/orders" class="hover:bg-sky-500").my-4.px-4.py-2.block.mx-auto.bg-sky-400.text-white.text-center.rounded-md My orders
+    //- - if (data.cart === undefined)
+    //-   .cart-page.flex-1.mx-auto.my-10.max-w-4xl.p-8.bg-white.shadow-md.rounded-lg
+    //-     h1.text-lg.font-semibold.mb-2.text-center Cart is empty
+    //-     a(href="/").sky-400.border-sky-400.text-center.font-bold.block.w-full.underline.underline-offset-4.text-xl Home 
+

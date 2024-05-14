@@ -19,50 +19,52 @@ const userSchema = new mongoose.Schema(
             required: [true, "Please enter password"],
         },
 
-        addresses: [
-            {
-                fullName: {
-                    type: String,
-                    required: [true, "Please enter your name"],
-                },
+        address: String,
 
-                mobileNumber: {
-                    type: String,
-                    required: [true, "Please enter your mobile number"],
-                    min: [10, "Please enter a valid mobile number"],
-                    max: [10, "Please enter a valid mobile number"],
-                },
+        // addresses: [
+        //     {
+        //         fullName: {
+        //             type: String,
+        //             required: [true, "Please enter your name"],
+        //         },
 
-                pincode: {
-                    type: String,
-                    min: [6, "Please enter a valid pincode"],
-                    max: [6, "Please enter a valid pincode"],
-                },
+        //         mobileNumber: {
+        //             type: String,
+        //             required: [true, "Please enter your mobile number"],
+        //             min: [10, "Please enter a valid mobile number"],
+        //             max: [10, "Please enter a valid mobile number"],
+        //         },
 
-                addressLine1: {
-                    type: String,
-                    required: true,
-                },
+        //         pincode: {
+        //             type: String,
+        //             min: [6, "Please enter a valid pincode"],
+        //             max: [6, "Please enter a valid pincode"],
+        //         },
 
-                addressLine2: {
-                    type: String,
-                },
+        //         addressLine1: {
+        //             type: String,
+        //             required: true,
+        //         },
 
-                city: {
-                    type: String,
-                    required: true,
-                },
-                state: {
-                    type: String,
-                    required: true,
-                },
+        //         addressLine2: {
+        //             type: String,
+        //         },
 
-                default: {
-                    type: Boolean,
-                    default: false,
-                },
-            },
-        ],
+        //         city: {
+        //             type: String,
+        //             required: true,
+        //         },
+        //         state: {
+        //             type: String,
+        //             required: true,
+        //         },
+
+        //         default: {
+        //             type: Boolean,
+        //             default: false,
+        //         },
+        //     },
+        // ],
     },
     {
         timestamps: true,

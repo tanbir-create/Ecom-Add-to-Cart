@@ -49,6 +49,6 @@ document.getElementById("goto-login")?.addEventListener("click", () => {
     if (params.has("redirect") && params.get("redirect") === "cart") {
         location.assign("/login/?redirect=cart");
     } else {
-        location.assign("/");
+        location.assign("/login");
     }
 });

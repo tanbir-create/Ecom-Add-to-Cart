@@ -13,7 +13,8 @@ block content
             .cart-item.mb-6.flex.items-start.border-b.border-gray-200.pb-4(id=`product-${item.productId}`)
               img(src=item.thumbnail, alt=item.name, class="w-16 h-16 mr-4")
               .cart-item-details.flex-1.ml-4
-                h3.text-lg.font-semibold.mb-2= item.name
+                a(href=`/products/${item.productId}`).underline 
+                  h3.text-lg.font-semibold.mb-2= item.name
                 p.text-gray-600.mb-2.text-sm Stock: #{item.stock}
                 .flex.flex-row.items-start.mb-2.gap-3
                   input.form-input.w-16.shadow-md(id=`quantity-${item.productId}`, type="number", min="1", value=`${item.quantity}`, class="border-gray-600 rounded-md px-2 py-1 text-sm bg-transparent border-0 text-gray-800 text-center focus:ring-0")
@@ -27,7 +28,7 @@ block content
           span#cart-total-items #{data.totalItems}
         p.text-lg.font-semibold Total Price: 
          span#cart-total-price #{data.totalPrice.toLocaleString("hi-IN", {style: "currency", currency: "INR"})}
-        a(href="/checkout").my-4.px-4.py-2.block.mx-auto.bg-sky-400.text-white.text-center.rounded-md(class="hover:bg-sky-500") Checkout
+        a(href="/checkout" class="hover:bg-sky-500").my-4.px-4.py-2.block.mx-auto.bg-sky-400.text-white.text-center.rounded-md Checkout
     - if (data.cart === undefined)
       .cart-page.flex-1.mx-auto.my-10.max-w-4xl.p-8.bg-white.shadow-md.rounded-lg
         h1.text-lg.font-semibold.mb-2.text-center Cart is empty

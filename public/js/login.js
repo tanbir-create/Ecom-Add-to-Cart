@@ -56,6 +56,6 @@ document.getElementById("goto-signup")?.addEventListener("click", () => {
     if (params.has("redirect") && params.get("redirect") === "cart") {
         location.assign("/signup/?redirect=cart");
     } else {
-        location.assign("/");
+        location.assign("/signup");
     }
 });
